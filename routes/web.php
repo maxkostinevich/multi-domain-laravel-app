@@ -11,23 +11,39 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect('login');
-});
+// Frontend
+Route::group(
+    [
+        'domain' => '{subdomain}.' . config('app.domain'),
+    ],
+    function () {
+        Route::get('/', 'FrontendController@show')->name('website.show');
+    }
+);
 
-Route::get('/home', function () {
-    return redirect()->route('website.index');
-})->name('home');
+// Backend
+Route::group(
+    [
+        'domain' => config('app.domain')
+    ],
+    function () {
+        Route::get('/', function () {
+            return redirect('login');
+        });
 
-Auth::routes(['verify' => true]);
+        Route::get('/home', function () {
+            return redirect()->route('website.index');
+        })->name('home');
 
-// Administration
-Route::get('/websites', 'Admin\WebsiteController@index')->name('website.index');
-Route::get('/websites/create', 'Admin\WebsiteController@create')->name('website.create');
-Route::get('/websites/{website}', 'Admin\WebsiteController@edit')->name('website.edit');
-Route::post('/websites/create', 'Admin\WebsiteController@store')->name('website.store');
-Route::patch('/websites/{website}', 'Admin\WebsiteController@update')->name('website.update');
-Route::delete('/websites/{website}', 'Admin\WebsiteController@destroy')->name('website.destroy');
+        Auth::routes(['verify' => true]);
 
-// Website frontend
-Route::get('/page/{slug}', 'FrontendController@show')->name('website.show');
+        // Administration
+        Route::get('/websites', 'Admin\WebsiteController@index')->name('website.index');
+        Route::get('/websites/create', 'Admin\WebsiteController@create')->name('website.create');
+        Route::get('/websites/{website}', 'Admin\WebsiteController@edit')->name('website.edit');
+        Route::post('/websites/create', 'Admin\WebsiteController@store')->name('website.store');
+        Route::patch('/websites/{website}', 'Admin\WebsiteController@update')->name('website.update');
+        Route::delete('/websites/{website}', 'Admin\WebsiteController@destroy')->name('website.destroy');
+
+    }
+);

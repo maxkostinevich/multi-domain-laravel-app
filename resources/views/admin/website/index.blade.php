@@ -32,7 +32,7 @@
                                 <div>
                                     <h5 class="card-title">{{ $website->name }}</h5>
                                     <h6 class="card-subtitle mb-2 text-muted small">
-                                        <a href="{{ route('website.show', $website->slug) }}" target="_blank" class="d-block text-success">/{{ $website->slug }}</a>
+                                        <a href="{{ route('website.show', $website->slug) }}" target="_blank" class="d-block text-success">{{ route('website.show', $website->slug) }}</a>
                                     </h6>
                                 </div>
                             </div>
