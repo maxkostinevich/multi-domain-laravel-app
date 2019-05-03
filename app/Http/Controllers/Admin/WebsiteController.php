@@ -58,7 +58,7 @@ class WebsiteController extends Controller
         ]);
 
         $website->name = $request->input('name');
-        $website->slug = Str::slug($request->input('name'), '-') . '-' . uniqid();
+        $website->slug =  $website->slug ?: Str::slug($request->input('name'), '-') . '-' . uniqid();
         $website->about = $request->input('about');
         $website->email = $request->input('email');
         $website->facebook = $request->input('facebook');
@@ -73,7 +73,7 @@ class WebsiteController extends Controller
         $website->save();
 
         return redirect()
-            ->route('website.edit', compact('website'))
+            ->route('website.index')
             ->with('status', $message);
     }
 }
