@@ -54,9 +54,11 @@ class WebsiteController extends Controller
     public function update(Request $request, Website $website){
         $request->validate([
             'name' => 'required',
-            'avatar' => 'image|mimes:jpeg,jpg,png,gif|max:2048'
+            'avatar' => 'image|mimes:jpeg,jpg,png,gif|max:2048',
+            'domain' => 'sometimes|nullable|unique:websites,domain,' . $website->id
         ]);
 
+        $website->domain = $request->input('domain');
         $website->name = $request->input('name');
         $website->slug =  $website->slug ?: Str::slug($request->input('name'), '-') . '-' . uniqid();
         $website->about = $request->input('about');

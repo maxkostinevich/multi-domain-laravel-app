@@ -32,7 +32,10 @@
                                 <div>
                                     <h5 class="card-title">{{ $website->name }}</h5>
                                     <h6 class="card-subtitle mb-2 text-muted small">
-                                        <a href="{{ route('website.show', $website->slug) }}" target="_blank" class="d-block text-success">{{ route('website.show', $website->slug) }}</a>
+                                        <a href="{{ route('website.subdomain', $website->slug) }}" target="_blank" class="d-block text-success">{{ route('website.subdomain', $website->slug) }}</a>
+                                        @if($website->domain)
+                                            <a href="{{ route('website.domain', $website->domain) }}" target="_blank" class="d-block text-success">{{ route('website.domain', $website->domain) }}</a>
+                                        @endif
                                     </h6>
                                 </div>
                             </div>

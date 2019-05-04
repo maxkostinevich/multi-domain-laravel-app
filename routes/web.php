@@ -11,15 +11,6 @@
 |
 */
 
-// Frontend
-Route::group(
-    [
-        'domain' => '{subdomain}.' . config('app.domain'),
-    ],
-    function () {
-        Route::get('/', 'FrontendController@show')->name('website.show');
-    }
-);
 
 // Backend
 Route::group(
@@ -45,5 +36,25 @@ Route::group(
         Route::patch('/websites/{website}', 'Admin\WebsiteController@update')->name('website.update');
         Route::delete('/websites/{website}', 'Admin\WebsiteController@destroy')->name('website.destroy');
 
+    }
+);
+
+// Frontend
+// Built-in subdomains
+Route::group(
+    [
+        'domain' => '{subdomain}.' . config('app.domain'),
+    ],
+    function(){
+        Route::get('/', 'FrontendController@show')->name('website.subdomain');
+    }
+);
+// Attached domains
+Route::group(
+    [
+        'domain' => '{domain}',
+    ],
+    function(){
+        Route::get('/', 'FrontendController@show')->name('website.domain');
     }
 );

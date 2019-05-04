@@ -34,9 +34,20 @@
                 @endif
                     {{ csrf_field() }}
 
+                    <div class="alert alert-warning">
+                        <div class="form-group">
+                            <label for="domain">Custom Domain</label>
+                            <input type="text" class="form-control" name="domain" id="domain" value="{{ old('domain', $website->domain) }}" placeholder="example.com">
+                            <div>To add a custom domain, just create a new <b>A</b> record pointing to <b>{{ request()->server('SERVER_ADDR') }}</b> in your domain name DNS settings.
+                                <br>
+                                <b>Please note: HTTPS connection may not work correctly, as this application created for demo purpose only.</b>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" name="name" id="name" value="{{ old('title', $website->name) }}" placeholder="Name">
+                        <input type="text" class="form-control" name="name" id="name" value="{{ old('name', $website->name) }}" placeholder="Name">
                     </div>
                     <div class="d-flex flex-row mb-3">
                         <div class="mr-4">
