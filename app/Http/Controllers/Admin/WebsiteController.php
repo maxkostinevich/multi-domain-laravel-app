@@ -24,17 +24,26 @@ class WebsiteController extends Controller
     public function create()
     {
         $website = new Website();
+        $website->user_id = auth()->user()->id;
         return $this->edit($website);
     }
 
     // Show the form for editing the specified website
     public function edit(Website $website){
+        if($website->user_id != auth()->user()->id){
+            return abort(401);
+        }
+
         return view('admin.website.edit', compact('website'));
     }
 
     // Delete the specified website
     public function destroy(Website $website)
     {
+        if($website->user_id != auth()->user()->id){
+            return abort(401);
+        }
+
         $website->delete();
 
         return redirect()
@@ -52,6 +61,11 @@ class WebsiteController extends Controller
 
     // Update the specified website
     public function update(Request $request, Website $website){
+
+        if($website->user_id != auth()->user()->id){
+            return abort(401);
+        }
+
         $request->validate([
             'name' => 'required',
             'avatar' => 'image|mimes:jpeg,jpg,png,gif|max:2048',
